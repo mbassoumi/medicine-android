@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">medicine reader</string>
+    <string name="scan">Scan</string>
+    <string name="tab_text">a7a</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="tab_text_1">طريقة الاستخدام</string>
+    <string name="tab_text_2">اثار جانبية</string>
+    <string name="tab_text_3">الاستعمال</string>
+    <string name="tab_text_4">تحذيرات</string>
+    <string name="tab_text_5">طريقة التخزين</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>
