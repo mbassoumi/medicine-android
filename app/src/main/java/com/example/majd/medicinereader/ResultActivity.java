@@ -11,7 +11,17 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.majd.medicinereader.api.classes.MedicineData;
+import com.example.majd.medicinereader.api.interfaces.RetrofitInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ResultActivity extends AppCompatActivity {
@@ -31,10 +41,76 @@ public class ResultActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+
+        // -------------------------------------------------------------------------
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://medicine-reader.appspot.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitInterface api = retrofit.create(RetrofitInterface.class);
+
+        Call<MedicineData> call =api.getMedicineData() ;
+
+        call.enqueue(new Callback<MedicineData>() {
+
+            @Override
+            public void onResponse(Call<MedicineData> call, Response<MedicineData> response) {
+                MedicineData medicineData = response.body();
+                textView = (TextView)findViewById(R.id.section_label_side_effect);
+                textView.setText(medicineData.getSideEffects().get(1).getSide_effects());
+                Toast.makeText(getApplicationContext(),medicineData.getUses().get(1).getUse_for(),Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<MedicineData> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
+        /*
+
+
+        @Override
+            public void onResponse(Call<MedicineData> call, Response<MedicineData> response) {
+                List<Hero> h = response.body();
+                //   if(h == null){
+                Log.i("name ::::::","Empty jjjjjjjjjjjjj");
+                // }
+
+                for (int i =0 ;i<h.size();i++){
+                    Log.i("name ::::::",h.get(i).getName());
+                    //Log.i("Realname ::::",h.getRealname());
+                }
+                Log.i("name ::::::","End 55555555555");
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Hero>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                Log.i("name ::::::",""+t.getMessage());
+            }
+         */
+
+
+        // -------------------------------------------------------------------------
+
+
+
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
