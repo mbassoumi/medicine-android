@@ -29,8 +29,8 @@ import retrofit2.http.Path;
 public interface RetrofitInterface {
     // check if user register or not
  
-    @GET("medicine/6251586065004")
-    Call<MedicineData> getMedicineData();
+    @GET("medicine/{barcode}")
+    Call<MedicineData> getMedicineData(@Path("barcode") String barcode);
 
    
 

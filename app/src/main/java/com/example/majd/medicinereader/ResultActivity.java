@@ -1,21 +1,29 @@
 package com.example.majd.medicinereader;
 
+//import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.majd.medicinereader.api.classes.MedicineData;
 import com.example.majd.medicinereader.api.interfaces.RetrofitInterface;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +49,24 @@ public class ResultActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    private TextView textView;
+    private TextView side_effect_textView;
+    private TextView uses_textView;
+    private TextView warnings_textView;
+    private TextView store_textView;
+    private TextView how_use_textView;
+    private Toolbar toolbar;
+    private ListView listView;
+
+    Tab1HowUse tab1 = new Tab1HowUse();
+    Tab2SideEffects tab2 = new Tab2SideEffects();
+    Tab3Uses tab3 = new Tab3Uses();
+    Tab4Warnings tab4 = new Tab4Warnings();
+    Tab5Storing tab5 = new Tab5Storing();
+    private FragmentTransaction ft;
+
+
+
+    public MedicineData medicineData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,73 +74,15 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
 
-        // -------------------------------------------------------------------------
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://medicine-reader.appspot.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RetrofitInterface api = retrofit.create(RetrofitInterface.class);
-
-        Call<MedicineData> call =api.getMedicineData() ;
-
-        call.enqueue(new Callback<MedicineData>() {
-
-            @Override
-            public void onResponse(Call<MedicineData> call, Response<MedicineData> response) {
-                MedicineData medicineData = response.body();
-                textView = (TextView)findViewById(R.id.section_label_side_effect);
-                textView.setText(medicineData.getSideEffects().get(1).getSide_effects());
-                Toast.makeText(getApplicationContext(),medicineData.getUses().get(1).getUse_for(),Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<MedicineData> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-
-        /*
-
-
-        @Override
-            public void onResponse(Call<MedicineData> call, Response<MedicineData> response) {
-                List<Hero> h = response.body();
-                //   if(h == null){
-                Log.i("name ::::::","Empty jjjjjjjjjjjjj");
-                // }
-
-                for (int i =0 ;i<h.size();i++){
-                    Log.i("name ::::::",h.get(i).getName());
-                    //Log.i("Realname ::::",h.getRealname());
-                }
-                Log.i("name ::::::","End 55555555555");
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Hero>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                Log.i("name ::::::",""+t.getMessage());
-            }
-         */
 
 
         // -------------------------------------------------------------------------
 
 
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        toolbar.setTitle("majd");
+        toolbar.setTitle("معلومات الدواء");
 
 
         setSupportActionBar(toolbar);
@@ -133,6 +100,75 @@ public class ResultActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+
+        // -------------------------------------------------------------------------
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://medicine-reader.appspot.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitInterface api = retrofit.create(RetrofitInterface.class);
+
+        Call<MedicineData> call =api.getMedicineData("72900008000281") ;
+
+        call.enqueue(new Callback<MedicineData>() {
+
+            @Override
+            public void onResponse(Call<MedicineData> call, Response<MedicineData> response) {
+
+                try {
+                    medicineData = response.body();
+                    try {
+                        toolbar.setTitle(medicineData.getMedicine().getName());
+                        how_use_textView = (TextView)findViewById(R.id.section_label_how_use);
+                        side_effect_textView = (TextView)findViewById(R.id.section_label_side_effect);
+                        how_use_textView.setText(medicineData.getMedicine().getUse());
+                        side_effect_textView.setText("");
+                        for (int i = 0; i< medicineData.getSideEffects().size(); i++){
+                            side_effect_textView.append(" * ");
+                            side_effect_textView.append(medicineData.getSideEffects().get(i).getSide_effects());
+                            side_effect_textView.append("\n");
+                        }
+
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(),"عذرا. هذا الدواء غير مسجل لدي :(",Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (Exception e) {
+
+//                    Toast.makeText(getApplicationContext(),"حدث خطأ بالتطبيق",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+                try {
+                    ft = getSupportFragmentManager().beginTransaction();
+//                    ft.detach(tab1);
+//                    ft.attach(tab1);
+//                    ft.detach(tab2);
+//                    ft.attach(tab2);
+//                    ft.detach(tab3);
+//                    ft.attach(tab3);
+//                    ft.detach(tab4);
+//                    ft.attach(tab4);
+//                    ft.detach(tab5);
+//                    ft.attach(tab5);
+                    ft.commit();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MedicineData> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+
+            }
+        });
+
 
 
     }
@@ -179,19 +215,19 @@ public class ResultActivity extends AppCompatActivity {
             // return the current tabs
             switch (position){
                 case 0:
-                    Tab1HowUse tab1 = new Tab1HowUse();
+//                    Tab1HowUse tab1 = new Tab1HowUse();
                     return tab1;
                 case 1:
-                    Tab2SideEffects tab2 = new Tab2SideEffects();
+//                    Tab2SideEffects tab2 = new Tab2SideEffects();
                     return tab2;
                 case 2:
-                    Tab3Uses tab3 = new Tab3Uses();
+//                    Tab3Uses tab3 = new Tab3Uses();
                     return tab3;
                 case 3:
-                    Tab4Warnings tab4 = new Tab4Warnings();
+//                    Tab4Warnings tab4 = new Tab4Warnings();
                     return tab4;
                 case 4:
-                    Tab5Storing tab5 = new Tab5Storing();
+//                    Tab5Storing tab5 = new Tab5Storing();
                     return tab5;
 
                 default:

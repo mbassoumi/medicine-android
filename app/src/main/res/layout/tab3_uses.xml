@@ -4,10 +4,10 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.majd.medicinereader.ResultActivity$PlaceholderFragment">
+    tools:context="com.example.majd.medicinereader.Tab3Uses">
 
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/section_label_uses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
