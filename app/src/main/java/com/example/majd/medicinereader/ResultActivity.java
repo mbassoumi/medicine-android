@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -126,16 +127,20 @@ public class ResultActivity extends AppCompatActivity {
                     try {
                         toolbar.setTitle(medicineData.getMedicine().getName());
                         how_use_textView = (TextView)findViewById(R.id.section_label_how_use);
-                        side_effect_textView = (TextView)findViewById(R.id.section_label_side_effect);
+//                        side_effect_textView = (TextView)findViewById(R.id.section_label_side_effect);
                         how_use_textView.setText(medicineData.getMedicine().getUse());
-                        side_effect_textView.setText("");
-                        for (int i = 0; i< medicineData.getSideEffects().size(); i++){
-                            side_effect_textView.append(" * ");
-                            side_effect_textView.append(medicineData.getSideEffects().get(i).getSide_effects());
-                            side_effect_textView.append("\n");
-                        }
+//                        side_effect_textView.setText("");
+//                        for (int i = 0; i< medicineData.getSideEffects().size(); i++){
+//                            side_effect_textView.append(" * ");
+//                            side_effect_textView.append(medicineData.getSideEffects().get(i).getSide_effects());
+//                            side_effect_textView.append("\n");
+//                            side_effect_listAdapter.add(medicineData.getSideEffects().get(i).getSide_effects());
+//                        }
+//                        side_effect_listView.setAdapter(side_effect_listAdapter);
+
 
                     } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplicationContext(),"عذرا. هذا الدواء غير مسجل لدي :(",Toast.LENGTH_LONG).show();
                         finish();
                     }
