@@ -5,6 +5,7 @@ package com.example.majd.medicinereader.api.interfaces;
  */
 
 
+import com.example.majd.medicinereader.api.classes.Medicine;
 import com.example.majd.medicinereader.api.classes.MedicineData;
 
 import java.util.List;
@@ -28,10 +29,13 @@ import retrofit2.http.Path;
 
 public interface RetrofitInterface {
     // check if user register or not
- 
+
     @GET("medicine/{barcode}")
     Call<MedicineData> getMedicineData(@Path("barcode") String barcode);
 
-   
+    @GET("search/{name}")
+    Call<List<Medicine>> getSearchResult(@Path("name") String name);
+
+
 
 }
