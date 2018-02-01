@@ -112,7 +112,9 @@ public class ResultActivity extends AppCompatActivity {
 
         RetrofitInterface api = retrofit.create(RetrofitInterface.class);
 
-        Call<MedicineData> call =api.getMedicineData("72900008000281") ;
+        String barcode = getIntent().getStringExtra("scanContent");
+
+        Call<MedicineData> call =api.getMedicineData(barcode);
 
         call.enqueue(new Callback<MedicineData>() {
 
@@ -135,16 +137,18 @@ public class ResultActivity extends AppCompatActivity {
 
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(),"عذرا. هذا الدواء غير مسجل لدي :(",Toast.LENGTH_LONG).show();
+                        finish();
                     }
 
                 } catch (Exception e) {
 
-//                    Toast.makeText(getApplicationContext(),"حدث خطأ بالتطبيق",Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"حدث خطأ بالتطبيق",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
                 try {
-                    ft = getSupportFragmentManager().beginTransaction();
+//                    ft = getSupportFragmentManager().beginTransaction();
 //                    ft.detach(tab1);
 //                    ft.attach(tab1);
 //                    ft.detach(tab2);
@@ -155,17 +159,19 @@ public class ResultActivity extends AppCompatActivity {
 //                    ft.attach(tab4);
 //                    ft.detach(tab5);
 //                    ft.attach(tab5);
-                    ft.commit();
+//                    ft.commit();
                 }catch (Exception e){
-                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"حدث خطأ بالتطبيق",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
             }
 
             @Override
             public void onFailure(Call<MedicineData> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-
+                Toast.makeText(getApplicationContext(),"لا يوجد اتصال مع السيرفر ):",Toast.LENGTH_LONG).show();
+                finish();
             }
         });
 
