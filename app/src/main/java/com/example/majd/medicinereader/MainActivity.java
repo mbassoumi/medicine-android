@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         }else{
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
+                    "لم يتم التعرف على الكود", Toast.LENGTH_SHORT);
             toast.show();
         }
     }

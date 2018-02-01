@@ -140,7 +140,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplicationContext(),"عذرا. هذا الدواء غير مسجل لدي :(",Toast.LENGTH_LONG).show();
                         finish();
                     }
