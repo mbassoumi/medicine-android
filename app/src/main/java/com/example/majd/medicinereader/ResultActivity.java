@@ -153,18 +153,19 @@ public class ResultActivity extends AppCompatActivity {
                 }
 
                 try {
-//                    ft = getSupportFragmentManager().beginTransaction();
+                    ft = getSupportFragmentManager().beginTransaction();
 //                    ft.detach(tab1);
 //                    ft.attach(tab1);
-//                    ft.detach(tab2);
-//                    ft.attach(tab2);
+                    ft.detach(tab2);
+//                    ft.commit();
+                    ft.attach(tab2);
+                    ft.commit();
 //                    ft.detach(tab3);
 //                    ft.attach(tab3);
 //                    ft.detach(tab4);
 //                    ft.attach(tab4);
 //                    ft.detach(tab5);
 //                    ft.attach(tab5);
-//                    ft.commit();
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(),"حدث خطأ بالتطبيق",Toast.LENGTH_LONG).show();
 //                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
