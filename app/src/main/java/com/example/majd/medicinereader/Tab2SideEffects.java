@@ -33,8 +33,8 @@ public class Tab2SideEffects extends Fragment{
 
 
         ArrayList<String> side_effects_ArrayList = new ArrayList<String>();
-        listAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, side_effects_ArrayList);
-
+//        listAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, side_effects_ArrayList);
+        listAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_black_text,R.id.list_content, side_effects_ArrayList);
         listView = (ListView)rootView.findViewById(R.id.side_effect_listview);
         try {
 //            textView.setText("الاثار الجانبية");

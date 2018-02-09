@@ -30,7 +30,8 @@ public class Tab4Warnings extends Fragment {
 //        TextView textView = (TextView) rootView.findViewById(R.id.section_label_warnings);
 
         ArrayList<String> side_effects_ArrayList = new ArrayList<String>();
-        listAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, side_effects_ArrayList);
+//        listAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, side_effects_ArrayList);
+        listAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_black_text, R.id.list_content, side_effects_ArrayList);
 
         listView = (ListView)rootView.findViewById(R.id.warnings_listview);
         try {

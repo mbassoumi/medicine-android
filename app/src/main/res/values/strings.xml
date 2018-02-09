@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">دوائي</string>
+    <string name="app_name">اعرف دوائك</string>
     <string name="scan">بحث كاميرا</string>
     <string name="search">بحث كتابي</string>
     <string name="tab_text">a7a</string>
@@ -9,7 +9,7 @@
     <string name="title_activity_result">ResultActivity</string>
     <string name="tab_text_1">طريقة الاستخدام</string>
     <string name="tab_text_2">اثار جانبية</string>
-    <string name="tab_text_3">الاستعمال</string>
+    <string name="tab_text_3">التأثير العلاجي</string>
     <string name="tab_text_4">تحذيرات</string>
     <string name="tab_text_5">طريقة التخزين</string>
     <string name="action_settings">Settings</string>
